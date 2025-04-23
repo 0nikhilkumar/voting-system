@@ -1,0 +1,30 @@
+
+services:
+  node_app:
+    build: .
+    container_name: node_app_cont
+    ports:
+      - "3000:5000"
+    env_file:
+      - ".env"
+    networks:
+      - node-networks
+    restart: always
+    depends_on:
+      - mongodb
+
+  mongodb:
+    container_name: mongodb_cont
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - node-networks
+    volumes:
+      - ./mongo-data:/data/db
+    restart: always
+
+networks:
+  node-networks:
+volumes:
+  mongo-data:
